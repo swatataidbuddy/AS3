@@ -1,54 +1,56 @@
-"demo": {
-    "class": "Tenant",
+{
     "demo": {
-        "class": "Application",
-        "template": "generic",
-        "www.demo.com": {
-            "class": "GSLB_Domain",
-            "domainName": "www.demo.com",
-            "resourceRecordType": "A",
-            "poolLbMode": "ratio",
-            "pools": [
-                {
-                    "use": "demo_pool"
-                }
-            ]
-        },
-        "demo_pool": {
-            "class": "GSLB_Pool",
-            "enabled": false,
-            "lbModeAlternate": "ratio",
-            "lbModeFallback": "ratio",
-            "lbModePreferred": "ratio",
-            "manualResumeEnabled": true,
-            "verifyMemberEnabled": false,
-            "qosHitRatio": 10,
-            "qosHops": 11,
-            "qosKbps": 8,
-            "qosLinkCapacity": 35,
-            "qosPacketRate": 5,
-            "qosRoundTripTime": 75,
-            "qosTopology": 3,
-            "qosVirtualServerCapacity": 2,
-            "qosVirtualServerScore": 1,
-            "members": [
-                {
-                    "ratio": 10,
-                    "server": {
-                        "bigip": "/Common/25.65.45.78"
-                    },
-                    "virtualServer": "25.65.45.78"
-                }
-            ],
-            "bpsLimit": 5,
-            "bpsLimitEnabled": true,
-            "ppsLimit": 4,
-            "ppsLimitEnabled": true,
-            "connectionsLimit": 3,
-            "connectionsLimitEnabled": true,
-            "maxAnswersReturned": 10,
-            "monitors": [],
-            "resourceRecordType": "A"
+        "class": "Tenant",
+        "demo": {
+            "class": "Application",
+            "template": "generic",
+            "www.demo.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.demo.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "ratio",
+                "pools": [
+                    {
+                        "use": "demo_pool"
+                    }
+                ]
+            },
+            "demo_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "ratio",
+                "lbModeFallback": "ratio",
+                "lbModePreferred": "ratio",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/25.65.45.78"
+                        },
+                        "virtualServer": "25.65.45.78"
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A"
+            }
         }
     }
 }
