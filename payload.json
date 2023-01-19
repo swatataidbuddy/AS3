@@ -1,49 +1,4 @@
 {
-    "v15partition": {
-        "class": "Tenant",
-        "ltmas3.com": {
-            "class": "Application",
-            "template": "generic",
-            "ltmas3.com": {
-                "class": "Service_HTTP",
-                "snat": "auto",
-                "virtualAddresses": [
-                    "18.23.45.67"
-                ],
-                "virtualPort": 80,
-                "pool": "ltmas3.com_pool"
-            },
-            "ltmas3.com_pool": {
-                "class": "Pool",
-                "loadBalancingMode": "dynamic-ratio-member",
-                "monitors": [
-                    {
-                        "use": "http"
-                    }
-                ],
-                "members": [
-                    {
-                        "servicePort": 80,
-                        "serverAddresses": [
-                            "12.34.56.78"
-                        ]
-                    },
-                    {
-                        "servicePort": 25,
-                        "serverAddresses": [
-                            "13.45.67.89"
-                        ]
-                    }
-                ]
-            },
-            "http": {
-                "class": "Monitor",
-                "monitorType": "http",
-                "receive": "",
-                "send": ""
-            }
-        }
-    },
     "v15_partition_test": {
         "class": "Tenant",
         "LTM_AS3": {
