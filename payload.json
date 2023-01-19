@@ -741,15 +741,14 @@
                     {
                         "use": "sample_pool"
                     }
-                ],
-                "enabled": true
+                ]
             },
             "sample_pool": {
                 "class": "GSLB_Pool",
                 "enabled": false,
-                "lbModeAlternate": "ratio",
-                "lbModeFallback": "ratio",
-                "lbModePreferred": "ratio",
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
                 "manualResumeEnabled": true,
                 "verifyMemberEnabled": false,
                 "qosHitRatio": 10,
@@ -761,7 +760,15 @@
                 "qosTopology": 3,
                 "qosVirtualServerCapacity": 2,
                 "qosVirtualServerScore": 1,
-                "members": [],
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/154.54.78.125"
+                        },
+                        "virtualServer": "154.54.78.125"
+                    }
+                ],
                 "bpsLimit": 5,
                 "bpsLimitEnabled": true,
                 "ppsLimit": 4,
@@ -769,13 +776,8 @@
                 "connectionsLimit": 3,
                 "connectionsLimitEnabled": true,
                 "maxAnswersReturned": 10,
-                "monitors": [
-                    {
-                        "bigip": "/Common/http"
-                    }
-                ],
-                "resourceRecordType": "A",
-                "ttl": 30
+                "monitors": [],
+                "resourceRecordType": "A"
             }
         }
     },
@@ -1458,5 +1460,66 @@
                 "resourceRecordType": "A"
             }
         }
+    },
+    "class": "ADC",
+    "schemaVersion": "3.11.0",
+    "id": "GSLB_Sample",
+    "demo": {
+        "class": "Tenant",
+        "jan19": {
+            "class": "Application",
+            "template": "generic",
+            "www.jan19.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.jan19.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "round-robin",
+                "pools": [
+                    {
+                        "use": "jan19_pool"
+                    }
+                ]
+            },
+            "jan19_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "round-robin",
+                "lbModeFallback": "round-robin",
+                "lbModePreferred": "round-robin",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/154.54.78.125"
+                        },
+                        "virtualServer": "154.54.78.125"
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A"
+            }
+        }
+    },
+    "updateMode": "selective",
+    "controls": {
+        "archiveTimestamp": "2023-01-19T10:53:07.389Z"
     }
 }
