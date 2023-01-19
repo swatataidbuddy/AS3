@@ -1254,13 +1254,6 @@
             }
         }
     },
-    "as3testtenant": {
-        "class": "Tenant",
-        "as3testapplication": {
-            "class": "Application",
-            "template": "generic"
-        }
-    },
     "testas3gtmpartition": {
         "class": "Tenant",
         "testas3gtmapplication": {
