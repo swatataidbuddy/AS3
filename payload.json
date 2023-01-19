@@ -1,1 +1,1462 @@
-
+{
+    "v15partition": {
+        "class": "Tenant",
+        "ltmas3.com": {
+            "class": "Application",
+            "template": "generic",
+            "ltmas3.com": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "18.23.45.67"
+                ],
+                "virtualPort": 80,
+                "pool": "ltmas3.com_pool"
+            },
+            "ltmas3.com_pool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [
+                    {
+                        "use": "http"
+                    }
+                ],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "12.34.56.78"
+                        ]
+                    },
+                    {
+                        "servicePort": 25,
+                        "serverAddresses": [
+                            "13.45.67.89"
+                        ]
+                    }
+                ]
+            },
+            "http": {
+                "class": "Monitor",
+                "monitorType": "http",
+                "receive": "",
+                "send": ""
+            }
+        }
+    },
+    "v15_partition_test": {
+        "class": "Tenant",
+        "LTM_AS3": {
+            "class": "Application",
+            "template": "generic",
+            "LTM_AS3_pool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [
+                    "http"
+                ],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "10.34.56.82"
+                        ]
+                    },
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "10.34.56.83"
+                        ]
+                    },
+                    {
+                        "servicePort": 443,
+                        "serverAddresses": [
+                            "10.34.56.84"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "Sample_02": {
+        "class": "Tenant",
+        "jan17": {
+            "class": "Application",
+            "template": "generic",
+            "www.jan17.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.jan17.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "ratio",
+                "pools": [
+                    {
+                        "use": "jan17_pool"
+                    }
+                ]
+            },
+            "jan17_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "ratio",
+                "lbModeFallback": "ratio",
+                "lbModePreferred": "ratio",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/12.32.34.36"
+                        },
+                        "virtualServer": "12.32.34.36"
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A"
+            }
+        },
+        "new_jan17": {
+            "class": "Application",
+            "template": "generic",
+            "www.newjan17.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.newjan17.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "round-robin",
+                "pools": [
+                    {
+                        "use": "new_jan17_pool"
+                    }
+                ]
+            },
+            "new_jan17_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "round-robin",
+                "lbModeFallback": "round-robin",
+                "lbModePreferred": "round-robin",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/25.65.82.59"
+                        },
+                        "virtualServer": "25.65.82.59"
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A"
+            }
+        },
+        "jan18": {
+            "class": "Application",
+            "template": "generic",
+            "www.jan18.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.jan18.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "jan18_pool"
+                    }
+                ]
+            },
+            "jan18_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/12.32.34.34"
+                        },
+                        "virtualServer": "12.32.34.34"
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A"
+            }
+        }
+    },
+    "useastpartition": {
+        "class": "Tenant",
+        "www": {
+            "class": "Application",
+            "template": "generic",
+            "www": {
+                "class": "GSLB_Domain",
+                "domainName": "www.jpmccreditapp.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "jpmccreditapp_pool"
+                    }
+                ]
+            },
+            "jpmccreditapp_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/2.2.5.8"
+                        },
+                        "virtualServer": "2.2.5.8"
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [
+                    {
+                        "bigip": "/Common/http"
+                    }
+                ],
+                "resourceRecordType": "A"
+            }
+        }
+    },
+    "uswestjpmc": {
+        "class": "Tenant",
+        "www.jpmcuswestcreditapp.com": {
+            "class": "Application",
+            "template": "generic",
+            "www.jpmcuswestcreditapp.com": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "192.168.99.34"
+                ],
+                "virtualPort": 3030,
+                "pool": "jpmcuswestcreditap_pool"
+            },
+            "jpmcuswestcreditap_pool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [
+                    "http"
+                ],
+                "members": [
+                    {
+                        "servicePort": 2020,
+                        "serverAddresses": [
+                            "192.168.99.45"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "as3": {
+        "class": "Tenant",
+        "kkas3_12test_vip": {
+            "class": "Application",
+            "template": "generic"
+        },
+        "testvirtual22": {
+            "class": "Application",
+            "template": "generic"
+        },
+        "newVipCreationTest": {
+            "class": "Application",
+            "template": "generic",
+            "newVipCreationTest": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "1.2.14.45"
+                ],
+                "virtualPort": 8080,
+                "pool": "newPoolAS3Creation"
+            },
+            "newPoolAS3Creation": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "1.2.14.46"
+                        ]
+                    }
+                ]
+            }
+        },
+        "test_as3_vs": {
+            "class": "Application",
+            "template": "generic",
+            "test_as3_vs": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "12.3.121.22"
+                ],
+                "virtualPort": 43,
+                "pool": "as3_pool",
+                "persistenceMethods": [
+                    "cookie"
+                ],
+                "profileHTTP": "basic",
+                "virtualType": "standard",
+                "layer4": "tcp",
+                "profileTCP": "normal",
+                "serviceDownImmediateAction": "none",
+                "shareAddresses": false,
+                "enable": true,
+                "maxConnections": 0,
+                "addressStatus": true,
+                "mirroring": "none",
+                "lastHop": "default",
+                "translateClientPort": false,
+                "translateServerAddress": true,
+                "translateServerPort": true,
+                "nat64Enabled": false,
+                "httpMrfRoutingEnabled": false,
+                "rateLimit": 0
+            },
+            "as3_pool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 443,
+                        "serverAddresses": [
+                            "12.36.45.85"
+                        ],
+                        "enable": true,
+                        "connectionLimit": 0,
+                        "rateLimit": -1,
+                        "dynamicRatio": 1,
+                        "ratio": 1,
+                        "priorityGroup": 0,
+                        "adminState": "enable",
+                        "addressDiscovery": "static",
+                        "shareNodes": false
+                    }
+                ],
+                "allowNATEnabled": true,
+                "allowSNATEnabled": true,
+                "minimumMembersActive": 1,
+                "reselectTries": 0,
+                "serviceDownAction": "none",
+                "slowRampTime": 10,
+                "minimumMonitors": 1
+            },
+            "enable": true
+        },
+        "saas_test": {
+            "class": "Application",
+            "template": "generic"
+        },
+        "sas_test_vis": {
+            "class": "Application",
+            "template": "generic",
+            "sas_test_vis": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "52.36.22.11"
+                ],
+                "virtualPort": 113,
+                "pool": "sas_pool_"
+            },
+            "sas_pool_": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 442,
+                        "serverAddresses": [
+                            "12.33.11.11"
+                        ]
+                    },
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "88.99.65.41"
+                        ]
+                    }
+                ]
+            }
+        },
+        "saas_test_api": {
+            "class": "Application",
+            "template": "generic",
+            "saas_test_api": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "25.31.22.41"
+                ],
+                "virtualPort": 421,
+                "pool": "saas_pool_new",
+                "persistenceMethods": [
+                    "cookie"
+                ],
+                "profileHTTP": "basic",
+                "virtualType": "standard",
+                "layer4": "tcp",
+                "profileTCP": "normal",
+                "serviceDownImmediateAction": "none",
+                "shareAddresses": false,
+                "enable": true,
+                "maxConnections": 0,
+                "addressStatus": true,
+                "mirroring": "none",
+                "lastHop": "default",
+                "translateClientPort": false,
+                "translateServerAddress": true,
+                "translateServerPort": true,
+                "nat64Enabled": false,
+                "httpMrfRoutingEnabled": false,
+                "rateLimit": 0
+            },
+            "saas_pool_new": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 422,
+                        "serverAddresses": [
+                            "12.34.52.74"
+                        ],
+                        "enable": true,
+                        "connectionLimit": 0,
+                        "rateLimit": -1,
+                        "dynamicRatio": 1,
+                        "ratio": 1,
+                        "priorityGroup": 0,
+                        "adminState": "enable",
+                        "addressDiscovery": "static",
+                        "shareNodes": false
+                    },
+                    {
+                        "servicePort": 442,
+                        "serverAddresses": [
+                            "85.69.45.33"
+                        ],
+                        "enable": true,
+                        "connectionLimit": 0,
+                        "rateLimit": -1,
+                        "dynamicRatio": 1,
+                        "ratio": 1,
+                        "priorityGroup": 0,
+                        "adminState": "enable",
+                        "addressDiscovery": "static",
+                        "shareNodes": false
+                    },
+                    {
+                        "servicePort": 580,
+                        "serverAddresses": [
+                            "85.96.85.45"
+                        ],
+                        "enable": true,
+                        "connectionLimit": 0,
+                        "rateLimit": -1,
+                        "dynamicRatio": 1,
+                        "ratio": 1,
+                        "priorityGroup": 0,
+                        "adminState": "enable",
+                        "addressDiscovery": "static",
+                        "shareNodes": false
+                    }
+                ],
+                "allowNATEnabled": true,
+                "allowSNATEnabled": true,
+                "minimumMembersActive": 1,
+                "reselectTries": 0,
+                "serviceDownAction": "none",
+                "slowRampTime": 10,
+                "minimumMonitors": 1
+            }
+        },
+        "saas_test_virtual": {
+            "class": "Application",
+            "template": "generic"
+        },
+        "new_saas.aug.com": {
+            "class": "Application",
+            "template": "generic",
+            "new_saas.aug.com": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "12.36.55.74"
+                ],
+                "virtualPort": 442,
+                "pool": "aug_pool"
+            },
+            "aug_pool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "25.36.32.11"
+                        ]
+                    }
+                ]
+            }
+        },
+        "appview.saas.com": {
+            "class": "Application",
+            "template": "generic",
+            "appview.saas.com": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "25.36.33.21"
+                ],
+                "virtualPort": 442,
+                "pool": "appviewx_pool"
+            },
+            "appviewx_pool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 442,
+                        "serverAddresses": [
+                            "56.36.44.33"
+                        ]
+                    },
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "85.96.88.77"
+                        ]
+                    }
+                ]
+            }
+        },
+        "test.rtest.com": {
+            "class": "Application",
+            "template": "generic",
+            "test.rtest.com": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "23.85.55.44"
+                ],
+                "virtualPort": 80,
+                "pool": "test_test_pool"
+            },
+            "test_test_pool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 442,
+                        "serverAddresses": [
+                            "85.69.55.44"
+                        ]
+                    }
+                ]
+            }
+        },
+        "appviewx.saassep.com": {
+            "class": "Application",
+            "template": "generic",
+            "appviewx.saassep.com": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "25.36.21.11"
+                ],
+                "virtualPort": 80,
+                "pool": "pool_test123",
+                "persistenceMethods": [
+                    "cookie"
+                ],
+                "profileHTTP": "basic",
+                "virtualType": "standard",
+                "layer4": "tcp",
+                "profileTCP": "normal",
+                "serviceDownImmediateAction": "none",
+                "shareAddresses": false,
+                "enable": true,
+                "maxConnections": 0,
+                "addressStatus": true,
+                "mirroring": "none",
+                "lastHop": "default",
+                "translateClientPort": false,
+                "translateServerAddress": true,
+                "translateServerPort": true,
+                "nat64Enabled": false,
+                "httpMrfRoutingEnabled": false,
+                "rateLimit": 0
+            },
+            "pool_test123": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "123.236.22.22"
+                        ],
+                        "enable": true,
+                        "connectionLimit": 0,
+                        "rateLimit": -1,
+                        "dynamicRatio": 1,
+                        "ratio": 1,
+                        "priorityGroup": 0,
+                        "adminState": "enable",
+                        "addressDiscovery": "static",
+                        "shareNodes": false
+                    }
+                ],
+                "allowNATEnabled": true,
+                "allowSNATEnabled": true,
+                "minimumMembersActive": 1,
+                "reselectTries": 0,
+                "serviceDownAction": "none",
+                "slowRampTime": 10,
+                "minimumMonitors": 1
+            }
+        },
+        "appviw.sep.com": {
+            "class": "Application",
+            "template": "generic",
+            "appviw.sep.com": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "25.36.32.11"
+                ],
+                "virtualPort": 80,
+                "pool": "pool_app"
+            },
+            "pool_app": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "25.36.87.156"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "Sample_01": {
+        "class": "Tenant",
+        "Jan11": {
+            "class": "Application",
+            "template": "generic",
+            "www.sample.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.sample.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "sample_pool"
+                    }
+                ],
+                "enabled": true
+            },
+            "sample_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "ratio",
+                "lbModeFallback": "ratio",
+                "lbModePreferred": "ratio",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [
+                    {
+                        "bigip": "/Common/http"
+                    }
+                ],
+                "resourceRecordType": "A",
+                "ttl": 30
+            }
+        }
+    },
+    "LTM_partition": {
+        "class": "Tenant",
+        "local_as3_vs": {
+            "class": "Application",
+            "template": "generic",
+            "local_as3_pool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [
+                    "http"
+                ],
+                "members": []
+            }
+        },
+        "local_as3_vs2": {
+            "class": "Application",
+            "template": "generic",
+            "local_as3_vs2": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "1.2.3.4"
+                ],
+                "virtualPort": 90,
+                "pool": "local_as3_pool2"
+            },
+            "local_as3_pool2": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [
+                    {
+                        "bigip": "/Common/mon_new_http_001"
+                    }
+                ],
+                "members": [
+                    {
+                        "servicePort": 443,
+                        "serverAddresses": [
+                            "12.12.13.13"
+                        ]
+                    }
+                ]
+            }
+        },
+        "aappviw_saas": {
+            "class": "Application",
+            "template": "generic",
+            "aappviw_saas": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "12.36.44.214"
+                ],
+                "virtualPort": 443,
+                "pool": "test_pool"
+            },
+            "test_pool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 442,
+                        "serverAddresses": [
+                            "12.36.22.11"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "AS3GTMpartition": {
+        "class": "Tenant",
+        "newApplication": {
+            "class": "Application",
+            "template": "generic"
+        }
+    },
+    "as3quadpartition": {
+        "class": "Tenant",
+        "as3quadapplication": {
+            "class": "Application",
+            "template": "generic",
+            "www.quadawideip19.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.quadawideip19.com",
+                "resourceRecordType": "AAAA",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "pool_www.quadawideip19.com"
+                    }
+                ]
+            },
+            "pool_www.quadawideip19.com": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/ipv6server"
+                        },
+                        "virtualServer": "ipv6server"
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "AAAA"
+            }
+        }
+    },
+    "AS3TESTPARTITION": {
+        "class": "Tenant",
+        "AS3TESTAPPLICATION": {
+            "class": "Application",
+            "template": "generic"
+        }
+    },
+    "AS3LTMPARTITION": {
+        "class": "Tenant",
+        "ltmasvirtualserver": {
+            "class": "Application",
+            "template": "generic"
+        },
+        "vs_app1_80": {
+            "class": "Application",
+            "template": "generic",
+            "vs_app1_80": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "192.168.44.33"
+                ],
+                "virtualPort": 80,
+                "pool": "pool_app1_80"
+            },
+            "pool_app1_80": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "192.168.4.1"
+                        ]
+                    }
+                ]
+            }
+        },
+        "as3_test_vip": {
+            "class": "Application",
+            "template": "generic",
+            "as3_test_vip": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "192.168.0.11"
+                ],
+                "virtualPort": 80,
+                "pool": "newPoolTestAug23"
+            },
+            "newPoolTestAug23": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "12.12.1.14"
+                        ]
+                    }
+                ]
+            }
+        },
+        "newtestaug23one.internal": {
+            "class": "Application",
+            "template": "generic",
+            "newtestaug23one.internal": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "192.168.0.13"
+                ],
+                "virtualPort": 80,
+                "pool": "newtestaug23onePool"
+            },
+            "newtestaug23onePool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "1.12.1.13"
+                        ]
+                    }
+                ]
+            }
+        },
+        "newviptestbydhi": {
+            "class": "Application",
+            "template": "generic",
+            "newviptestbydhi": {
+                "class": "Service_HTTP",
+                "snat": "auto",
+                "virtualAddresses": [
+                    "192.168.0.14"
+                ],
+                "virtualPort": 80,
+                "pool": "newviptestbydhipool"
+            },
+            "newviptestbydhipool": {
+                "class": "Pool",
+                "loadBalancingMode": "dynamic-ratio-member",
+                "monitors": [],
+                "members": [
+                    {
+                        "servicePort": 80,
+                        "serverAddresses": [
+                            "1.1.2.13"
+                        ]
+                    }
+                ]
+            }
+        }
+    },
+    "create_gtm_tenant": {
+        "class": "Tenant",
+        "ceate_gtm_application": {
+            "class": "Application",
+            "template": "generic"
+        }
+    },
+    "gtmtesttenant": {
+        "class": "Tenant",
+        "gtmtestapplication": {
+            "class": "Application",
+            "template": "generic",
+            "www.testgtmapp18.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.testgtmapp18.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "pool_www.testgtmapp18.com"
+                    }
+                ],
+                "enabled": true
+            },
+            "pool_www.testgtmapp18.com": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/1.1.1.4"
+                        },
+                        "virtualServer": "1.1.1.4",
+                        "enabled": true
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A",
+                "ttl": 30
+            }
+        }
+    },
+    "gtmtestaspartition": {
+        "class": "Tenant",
+        "gtmtestasapplication": {
+            "class": "Application",
+            "template": "generic",
+            "www.wideipas06.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.wideipas06.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "pool_www.wideipas06.com"
+                    }
+                ],
+                "enabled": true
+            },
+            "pool_www.wideipas06.com": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/154.54.78.125"
+                        },
+                        "virtualServer": "154.54.78.125",
+                        "enabled": true
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A",
+                "ttl": 30
+            },
+            "saas_new.fqdn.com": {
+                "class": "GSLB_Domain",
+                "domainName": "saas_new.fqdn.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "pool_saas_new.fqdn.com",
+                        "ratio": 1
+                    }
+                ],
+                "enabled": true
+            },
+            "pool_saas_new.fqdn.com": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/10.20.20.5"
+                        },
+                        "virtualServer": "device2",
+                        "enabled": true
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A",
+                "ttl": 30
+            },
+            "testsaas.appviw.com": {
+                "class": "GSLB_Domain",
+                "domainName": "testsaas.appviw.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "pool_testsaas.appviw.com",
+                        "ratio": 1
+                    }
+                ],
+                "enabled": true
+            },
+            "pool_testsaas.appviw.com": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/154.33.25.78"
+                        },
+                        "virtualServer": "154.33.25.78",
+                        "enabled": true
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A",
+                "ttl": 30
+            }
+        }
+    },
+    "as3testtenant": {
+        "class": "Tenant",
+        "as3testapplication": {
+            "class": "Application",
+            "template": "generic"
+        }
+    },
+    "testas3gtmpartition": {
+        "class": "Tenant",
+        "testas3gtmapplication": {
+            "class": "Application",
+            "template": "generic",
+            "www.gtmapplicationservices.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.gtmapplicationservices.com",
+                "resourceRecordType": "AAAA",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "pool_www.gtmapplicationservices.com"
+                    }
+                ]
+            },
+            "pool_www.gtmapplicationservices.com": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/ipv6server"
+                        },
+                        "virtualServer": "ipv6server"
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "AAAA"
+            }
+        }
+    },
+    "Hello": {
+        "class": "Tenant",
+        "hello": {
+            "class": "Application",
+            "template": "generic",
+            "www.hello.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.hello.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "ratio",
+                "pools": [
+                    {
+                        "use": "hello_pool"
+                    }
+                ]
+            },
+            "hello_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "ratio",
+                "lbModeFallback": "ratio",
+                "lbModePreferred": "ratio",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [
+                    {
+                        "ratio": 10,
+                        "server": {
+                            "bigip": "/Common/25.65.45.78"
+                        },
+                        "virtualServer": "25.65.45.78"
+                    }
+                ],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A"
+            }
+        }
+    },
+    "ggg": {
+        "class": "Tenant",
+        "ggg": {
+            "class": "Application",
+            "template": "generic",
+            "www.ggg.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.ggg.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "ggg_pool"
+                    }
+                ]
+            },
+            "ggg_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A"
+            }
+        }
+    },
+    "sss": {
+        "class": "Tenant",
+        "sss": {
+            "class": "Application",
+            "template": "generic",
+            "www.sss.com": {
+                "class": "GSLB_Domain",
+                "domainName": "www.sss.com",
+                "resourceRecordType": "A",
+                "poolLbMode": "global-availability",
+                "pools": [
+                    {
+                        "use": "sss_pool"
+                    }
+                ]
+            },
+            "sss_pool": {
+                "class": "GSLB_Pool",
+                "enabled": false,
+                "lbModeAlternate": "drop-packet",
+                "lbModeFallback": "drop-packet",
+                "lbModePreferred": "drop-packet",
+                "manualResumeEnabled": true,
+                "verifyMemberEnabled": false,
+                "qosHitRatio": 10,
+                "qosHops": 11,
+                "qosKbps": 8,
+                "qosLinkCapacity": 35,
+                "qosPacketRate": 5,
+                "qosRoundTripTime": 75,
+                "qosTopology": 3,
+                "qosVirtualServerCapacity": 2,
+                "qosVirtualServerScore": 1,
+                "members": [],
+                "bpsLimit": 5,
+                "bpsLimitEnabled": true,
+                "ppsLimit": 4,
+                "ppsLimitEnabled": true,
+                "connectionsLimit": 3,
+                "connectionsLimitEnabled": true,
+                "maxAnswersReturned": 10,
+                "monitors": [],
+                "resourceRecordType": "A"
+            }
+        }
+    }
+}
