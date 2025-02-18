@@ -149,8 +149,8 @@ if selected_file:
         # Split data into Label & Similarity Score
         table_data = []
         for item in sub_topics:
-            label, score = item.split(":")
-            table_data.append({"Topic Label": label.strip(), "Similarity Score": float(score.strip())})
+            label = item
+            table_data.append({"Topic Label": label.strip()})
 
         # Convert to DataFrame
         df = pd.DataFrame(table_data)
