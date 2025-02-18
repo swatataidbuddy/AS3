@@ -132,7 +132,7 @@ data = {"Nvidia-23": {
 }
 
 # Streamlit App Title
-st.title("Topic SuperGrouping using OpenAI")
+st.title("📊 Topics Super-Grouping using OpenAI")
 
 # File Selection Dropdown
 selected_file = st.selectbox("Select a File", list(data.keys()))
@@ -142,19 +142,13 @@ if selected_file:
     topics = list(data[selected_file].keys())
     selected_topic = st.selectbox("Select a High-Level Topic", topics)
 
-    # Display all Sub-Level Topics as a Table
+    # Display all Sub-Level Topics as a menu
     if selected_topic:
         sub_topics = data[selected_file][selected_topic]
 
-        # Split data into Label & Similarity Score
-        table_data = []
-        for item in sub_topics:
-            label = item
-            table_data.append({"Topic Label": label.strip()})
-
-        # Convert to DataFrame
-        df = pd.DataFrame(table_data)
-
-        # Display the table (without showing the index)
-        st.subheader(f"Sub-Level Topics for {selected_topic}")
-        st.dataframe(df.set_index("Topic Label"))  # This hides the default index and makes "Label" the index
+        st.subheader(f"Sub-Level Topics for {selected_topic}:")
+        
+        # Display each sub-topic as a clickable button
+        for sub in sub_topics:
+            if st.button(sub):
+                st.success(f"✅ You selected: {sub}")
