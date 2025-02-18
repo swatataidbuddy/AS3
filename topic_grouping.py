@@ -394,29 +394,7 @@ data = {"Nvidia-23":
   ]
 }
 }
-'''
-# Streamlit App Title
-st.title("📊 Topics Super-Grouping using OpenAI")
 
-# File Selection Dropdown
-selected_file = st.selectbox("Select a File", list(data.keys()))
-
-# Display High-Level Topics based on selected file
-if selected_file:
-    topics = list(data[selected_file].keys())
-    selected_topic = st.selectbox("Select a High-Level Topic", topics)
-
-    # Display all Sub-Level Topics as a menu
-    if selected_topic:
-        sub_topics = data[selected_file][selected_topic]
-
-        st.subheader(f"Sub-Level Topics for {selected_topic}:")
-        
-        # Display each sub-topic as a clickable button
-        for sub in sub_topics:
-            if st.button(sub):
-                st.success(f"✅ You selected: {sub}")
-'''
 
 st.title("📊 Topics Super-Grouping (Label and Summary) using OpenAI")
 
