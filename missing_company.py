@@ -1,5 +1,6 @@
 import streamlit as st
 import json
+import pandas as pd
 
 # Load JSON data
 json_file_path = "data.json"  # Update this path
@@ -19,7 +20,8 @@ if selected_company:
     
     # Prepare data for display
     company_data = data[selected_company]
-    table_data = [[year, ", ".join(quarters)] for year, quarters in company_data.items()]
+    table_data = [(year, ", ".join(quarters)) for year, quarters in company_data.items()]
+    df = pd.DataFrame(table_data, columns=["Year", "Quarters"])
     
     # Display as dataframe
-    st.table(table_data)
+    st.table(df)
