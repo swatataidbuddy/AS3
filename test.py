@@ -3,8 +3,7 @@ import pandas as pd
 import json
 
 # Sample JSON data
-sample_json = '''
-{
+sample_json = {
   "Investment Risks and Regulations": [
     {
       "topic_id": "Topic_0",
@@ -268,16 +267,17 @@ sample_json = '''
     }
   ]
 }
-'''
+
 
 st.title("Cluster Data Viewer")
-
+import re
 # Text area to input JSON data
-json_input = st.text_area("Paste your JSON data here:", sample_json, height=200)
-
+#json_input = st.text_area("Paste your JSON data here:", sample_json, height=200)
+#import pdb;pdb.set_trace()
 # Try to parse JSON
 try:
-    data = json.loads(json_input)
+    #leaned_response = re.sub(r"```json\n|\n```", "", json_input.strip())
+    data = sample_json
 except json.JSONDecodeError:
     st.error("Invalid JSON format. Please correct and try again.")
     st.stop()
@@ -291,4 +291,5 @@ if selected_cluster:
     cluster_data = data[selected_cluster]
     df = pd.DataFrame(cluster_data)
     st.table(df)
+
 
