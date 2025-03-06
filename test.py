@@ -289,7 +289,8 @@ selected_cluster = st.selectbox("Select a Cluster:", cluster_names)
 # Extract and display data for the selected cluster
 if selected_cluster:
     cluster_data = data[selected_cluster]
-    df = pd.DataFrame(cluster_data)
-    st.table(df)
+    df = pd.DataFrame(cluster_data)[["topic_label", "topic_summary"]]  # Remove 'topic_id' column
+    st.write(f"### Details for {selected_cluster}")
+    st.dataframe(df, height=500)  # Larger table height for better visibility
 
 
